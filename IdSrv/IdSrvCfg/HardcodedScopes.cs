@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using IdentityServer3.Core.Models;
 
-namespace IdSrv.Configuration
+namespace IdSrv.IdSrvCfg
 {
-    public static class Scopes
+    public static class HardcodedScopes
     {
         /// <summary>
         /// Returns a list of scopes that a client can ask for when authenticating a user

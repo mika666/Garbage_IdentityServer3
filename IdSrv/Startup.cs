@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using IdentityServer3.Core.Configuration;
-using IdSrv.Configuration;
+using IdSrv.IdSrvCfg;
 using Owin;
 
 namespace IdSrv
@@ -29,9 +29,9 @@ namespace IdSrv
                 SigningCertificate = LoadCertificate(),
 
                 Factory = new IdentityServerServiceFactory()
-                    .UseInMemoryUsers(Users.Get())
-                    .UseInMemoryClients(Clients.Get())
-                    .UseInMemoryScopes(Scopes.Get())
+                    .UseInMemoryUsers(HardcodedUsers.Get())
+                    .UseInMemoryClients(HardcodedClients.Get())
+                    .UseInMemoryScopes(HardcodedScopes.Get())
             });
         }
 

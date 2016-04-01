@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using IdentityServer3.Core.Models;
 
-namespace IdSrv.Configuration
+namespace IdSrv.IdSrvCfg
 {
-    public static class Clients
+    public static class HardcodedClients
     {
         public static IEnumerable<Client> Get()
         {

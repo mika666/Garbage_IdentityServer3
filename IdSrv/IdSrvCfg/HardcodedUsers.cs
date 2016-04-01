@@ -6,9 +6,9 @@ using System.Web;
 using IdentityServer3.Core;
 using IdentityServer3.Core.Services.InMemory;
 
-namespace IdSrv.Configuration
+namespace IdSrv.IdSrvCfg
 {
-    public static class Users
+    public static class HardcodedUsers
     {
         public static List<InMemoryUser> Get()
         {
