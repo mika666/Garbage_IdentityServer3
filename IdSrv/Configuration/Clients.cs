@@ -26,22 +26,22 @@ namespace IdSrv.Configuration
                     //this is a list of allowed redirect urls for the client
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:62891/popup.html",
+                        "https://localhost:44301/popup.html",
 
 
                         // The new page is a valid redirect page after login
-                        "http://localhost:62891/silent-renew.html"
+                        "https://localhost:44301/silent-renew.html"
                     },
 
                     // Valid URLs after logging out
                     PostLogoutRedirectUris = new List<string>
                     {
-                        "http://localhost:62891/index.html"
+                        "https://localhost:44301/index.html"
                     },
 
                     AllowedCorsOrigins = new List<string>
                     {
-                        "http://localhost:62891"
+                        "https://localhost:44301"
                     },
 
                     AllowAccessToAllScopes = true,

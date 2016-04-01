@@ -70,11 +70,17 @@
         </div>
     </div>
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <!--Session iframe-->
+<iframe id="rp" style="display:none"></iframe>
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/oidc-token-manager/dist/oidc-token-manager.js"></script>
 
 <script>
+    
+
+
     $(document).ready(function() {
         // helper function to show data to the user
         function display(selector, data) {
@@ -91,7 +97,7 @@
         var settings = {
             authority: 'https://localhost:44300',
             client_id: 'js',
-            popup_redirect_uri: 'http://localhost:62891/popup.html',
+            popup_redirect_uri: 'https://localhost:44301/popup.html',
 
             response_type: 'id_token token', //token is the access token!
             scope: 'openid profile email api',
@@ -102,11 +108,11 @@
             //The token manager will renew the token 60 seconds before it expires, which explains why we chose to change to access token lifetime to 70 seconds.
             //This means the token will be renewed every 10 seconds.
             silent_renew: true,
-            silent_redirect_uri: 'http://localhost:62891/silent-renew.html',
+            silent_redirect_uri: 'https://localhost:44301/silent-renew.html',
 
 
             // post-logout URL
-            post_logout_redirect_uri: 'http://localhost:62891/index.html',
+            post_logout_redirect_uri: 'https://localhost:44301/index.html',
 
 
             filter_protocol_claims: false
@@ -119,10 +125,53 @@
         });
 
 
+        function checkSessionState() {
+            manager.oidcClient.loadMetadataAsync().then(function (meta) {
+                if (meta.check_session_iframe && manager.session_state) {
+
+                    console.warn('session_state', manager.session_state);
+                    console.warn('check_session_iframe', meta.check_session_iframe);
+                    console.warn('client_id', settings.client_id);
+
+                    document.getElementById('rp').src = 'check-session.html#' +
+                        'session_state=' + manager.session_state +
+                        '&check_session_iframe=' + meta.check_session_iframe +
+                        '&client_id=' + settings.client_id;
+                }
+                else {
+                    document.getElementById('rp').src = 'about:blank';
+                }
+            });
+
+            window.onmessage = function (e) {
+                if (e.origin === 'https://localhost:44301' && e.data === 'changed') {
+                    manager.removeToken();
+                    manager.renewTokenSilentAsync().then(function () {
+                        // Session state changed but we managed to silently get a new identity token, everything's fine
+                        console.log('renewTokenSilentAsync success');
+                    }, function () {
+
+                        //This is where the user should be prompted with a logon window again
+                        //as the session has expired and also it was not possible to renew it silently
+
+                        // Here we couldn't get a new identity token, we have to ask the user to log in again
+                        console.log('renewTokenSilentAsync failed');
+                    });
+                }
+            }
+        }
+
+
+
         $('.js-login').click(function() {
             manager.openPopupForTokenAsync()
                 .then(function() {
                     display('.js-id-token', manager.profile);
+
+
+                    // Load the iframe and start listening to messages
+                    checkSessionState();
+
 
                     // Display the access token and its expiration in the new section
                     //display('.js-access-token', { access_token: manager.access_token, expires_in: manager.expires_in });
@@ -147,7 +196,7 @@
             }
 
             $.ajax({
-                url: 'http://localhost:59593/values',
+                url: 'https://localhost:44302/values',
                 method: 'GET',
                 dataType: 'json',
                 headers: headers
