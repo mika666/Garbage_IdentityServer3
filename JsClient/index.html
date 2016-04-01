@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Application</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <style>
+        .main-container {
+            padding-top: 70px;
+        }
+
+        pre:empty {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">JS Application</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="list-inline list-unstyled requests">
+                    <li><a href="index.html" class="btn btn-primary">Home</a></li>
+                    <li><button type="button" class="btn btn-default js-login">Login</button></li>
+                    <!-- New button to trigger an API call -->
+                    <li><button type="button" class="btn btn-default js-call-api">Call API</button></li>
+
+                    <!-- New logout button -->
+                    <li><button type="button" class="btn btn-danger js-logout">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Make the existing sections 4-column wide -->
+            <div class="col-xs-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">ID Token Contents</div>
+                    <div class="panel-body">
+                        <pre class="js-id-token"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Access Token</div>
+                    <div class="panel-body">
+                        <pre class="js-access-token"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- And add a new one for the result of the API call -->
+            <div class="col-xs-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">API call result</div>
+                    <div class="panel-body">
+                        <pre class="js-api-result"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/oidc-token-manager/dist/oidc-token-manager.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // helper function to show data to the user
+        function display(selector, data) {
+            if (data && typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data) {
+                data = JSON.stringify(data, null, 2);
+            }
+
+            $(selector).text(data);
+        }
+
+        var settings = {
+            authority: 'https://localhost:44300',
+            client_id: 'js',
+            popup_redirect_uri: 'http://localhost:62891/popup.html',
+
+            response_type: 'id_token token', //token is the access token!
+            scope: 'openid profile email api',
+
+            // Specify we want to renew tokens silently and the URL of the page that has to be used for that
+            //The HTML file will be used in a dynamically created iframe to renew the token. The URL of that page is passed to the token manager
+            //settings to instruct it to automatically renew the token when it expires.
+            //The token manager will renew the token 60 seconds before it expires, which explains why we chose to change to access token lifetime to 70 seconds.
+            //This means the token will be renewed every 10 seconds.
+            silent_renew: true,
+            silent_redirect_uri: 'http://localhost:62891/silent-renew.html',
+
+
+            // post-logout URL
+            post_logout_redirect_uri: 'http://localhost:62891/index.html',
+
+
+            filter_protocol_claims: false
+        };
+
+        var manager = new OidcTokenManager(settings);
+
+        manager.addOnTokenObtained(function () {
+            display('.js-access-token', { access_token: manager.access_token, expires_in: manager.expires_in });
+        });
+
+
+        $('.js-login').click(function() {
+            manager.openPopupForTokenAsync()
+                .then(function() {
+                    display('.js-id-token', manager.profile);
+
+                    // Display the access token and its expiration in the new section
+                    //display('.js-access-token', { access_token: manager.access_token, expires_in: manager.expires_in });
+                    //now handled in the addOnTokenObtained
+                }, function(error) {
+                    console.error(error);
+                });
+        });
+
+        //call the api
+        $('.js-call-api').click(function () {
+
+            //TODO - make it automated for ExtJs, so access token is included without having to mess with it all the time
+            //TODO - also make the ajax utils auto lock the app if there is 401 / 403; first is not authenticated, second forbidden as not authorised
+
+
+            //TODO - make the api endpoints configurable at the app entry point, so can be delivered through the web.config and never hardcoded here!
+
+            var headers = {};
+            if (manager.access_token) {
+                headers['Authorization'] = 'Bearer ' + manager.access_token;
+            }
+
+            $.ajax({
+                url: 'http://localhost:59593/values',
+                method: 'GET',
+                dataType: 'json',
+                headers: headers
+            }).then(function (data) {
+                display('.js-api-result', data);
+            }).fail(function (error) {
+                display('.js-api-result', {
+                    status: error.status,
+                    statusText: error.statusText,
+                    response: error.responseJSON
+                });
+            });
+        });
+
+
+        //QUESTION - how to automatically logout off the identity server???
+        //looks like post made to the logout with some token does the trick.
+        //question is - can it be called remotely???
+
+        //same actually applies to logon. is it possible to automatically logon user without having to display him
+        //the identity server logon page. Or at least by being able to display it in an iframe <- this seems like a potential security threat
+        //as the user cannot possibly know if he actually logs in with the real server he is after or some fake shit.
+        //so i guess this will not be possible at all...
+
+        //logout
+        $('.js-logout').click(function () {
+            manager.redirectForLogout();
+        });
+
+    });
+</script>
+</body>
+</html>
