@@ -68,12 +68,16 @@ namespace IdSrv
                 {
                     SiteName = "IdentityServer3 - UserService-MembershipReboot",
 
+                    //IsuerUri = "http://here.goes.some.unique.identity.issuer.uri",
+
                     SigningCertificate = Certificate.Get(),
                     Factory = idSvrFactory,
                     AuthenticationOptions = new AuthenticationOptions
                     {
                         IdentityProviders = ConfigureAdditionalIdentityProviders,
                     }
+
+                    
                 };
 
                 core.UseIdentityServer(options);

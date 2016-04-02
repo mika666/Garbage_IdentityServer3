@@ -27,10 +27,19 @@ namespace IdSrv.MRCfg
 
         static CustomConfig()
         {
+            //Note:
+            //maybe can do some db house keeping here too???
+            //System.Data.Entity.Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<DefaultMembershipRebootDatabase, BrockAllen.MembershipReboot.Ef.Migrations.Configuration>());
+
             Config = new CustomConfig();
             Config.PasswordHashingIterationCount = 10000;
             Config.RequireAccountVerification = false;
             //config.EmailIsUsername = true;
+
+            //Note
+            //some extra opts maybe...
+            //Config.AllowLoginAfterAccountCreation = true;
+            //Config.RequireAccountVerification = false;
         }
     }
 }
