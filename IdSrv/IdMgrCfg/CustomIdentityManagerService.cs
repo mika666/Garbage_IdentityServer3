@@ -22,6 +22,8 @@ using IdSrv.MRCfg;
 
 namespace IdSrv.IdMgrCfg
 {
+    //Note: all stuff here comes from the mbr custom cfg
+
     public class CustomIdentityManagerService : MembershipRebootIdentityManagerService<CustomUser, CustomGroup>
     {
         public CustomIdentityManagerService(CustomUserAccountService userSvc, CustomGroupService groupSvc)

@@ -39,6 +39,10 @@ namespace IdSrv
             //        .UseInMemoryScopes(HardcodedScopes.Get())
             //});
 
+
+            //TODO - likely will have to move MR related stuff to a separate class, so can later create a service that will let me handle user accoount creations, pass resets and stuff
+
+
             var mbrrbtConnStr = "MembershipRebootIdentityDb";
 
             //expose identity manager at /admin
@@ -57,6 +61,7 @@ namespace IdSrv
             app.Map("/core", core =>
             {
                 var idSvrFactory = Factory.Configure();
+
                 idSvrFactory.ConfigureCustomUserService(mbrrbtConnStr);
 
                 var options = new IdentityServerOptions

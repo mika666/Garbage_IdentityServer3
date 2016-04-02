@@ -19,6 +19,7 @@ using BrockAllen.MembershipReboot.Relational;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using IdentityManager;
@@ -28,9 +29,22 @@ namespace IdSrv.MRCfg
 {
     public class CustomDatabase : MembershipRebootDbContext<CustomUser, CustomGroup>
     {
+        //Note: paramless constructor needed when adding migrations
+        public CustomDatabase() { }
+
         public CustomDatabase(string name)
             : base(name)
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //Hello there ;)
+            //need to override the schema for the object here as it defaults to dbo of course
+            //could also override the properties mapping to lower case, but ignore it for the time being
+            //TODO
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

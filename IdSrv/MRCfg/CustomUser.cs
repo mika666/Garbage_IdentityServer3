@@ -38,8 +38,12 @@ namespace IdSrv.MRCfg
         public virtual string LastName { get; set; }
         public virtual int? Age { get; set; }
 
-        //will this be saved to the db???
-        public virtual string SomeCustomUserProperty { get; set; }
+        //will this be saved to the db??? --looks like it will ;)
+        //public virtual string SomeCustomUserProperty { get; set; }
+
+        //although I am having some propblems adding migrations and updating db. ef related in general but nut sure of this is because postgres is used or there is something else to be considered
+
+        //public virtual int? someNullableIdProp { get; set; }
     }
 
     public class CustomUserAccountService : UserAccountService<CustomUser>

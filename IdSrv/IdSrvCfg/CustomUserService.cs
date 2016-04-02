@@ -27,6 +27,8 @@ namespace IdSrv.IdSrvCfg
 {
     public static class CustomUserServiceExtensions
     {
+        //Note: the whole stuff for user related services / repos comes from the MR config!
+
         public static void ConfigureCustomUserService(this IdentityServerServiceFactory factory, string connString)
         {
             factory.UserService = new Registration<IUserService, CustomUserService>();
