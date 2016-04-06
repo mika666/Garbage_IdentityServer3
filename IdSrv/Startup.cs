@@ -69,8 +69,10 @@ namespace IdSrv
                     SiteName = "IdentityServer3 - UserService-MembershipReboot",
 
                     //IsuerUri = "http://here.goes.some.unique.identity.issuer.uri",
+                    //PublicOrigin = "", If the IdSrv is behind a firewall, load balancer, webgarden, it needs to know what is its pyblic uri
 
                     SigningCertificate = Certificate.Get(),
+
                     Factory = idSvrFactory,
                     AuthenticationOptions = new AuthenticationOptions
                     {

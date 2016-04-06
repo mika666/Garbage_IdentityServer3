@@ -32,7 +32,7 @@ namespace IdSrv.IdSrvCfg
 
                     ScopeSecrets = new List<Secret>
                     {
-                        new Secret("api-secret".Sha256())
+                        new Secret("api-secret".Sha256()) //thanks to that can call the api from backend
                     },
 
                     Type = ScopeType.Resource

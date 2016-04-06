@@ -6,6 +6,7 @@ using System.Web.Http;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("values")]
     public class ValuesController : ApiController
     {

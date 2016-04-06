@@ -5,7 +5,7 @@ namespace IdSrv.Migrations.MR
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<IdSrv.MRCfg.CustomDatabase>
+    internal sealed class Configuration : DbMigrationsConfiguration<IdSrv.MembershipRebootCustomisation.CustomDatabase>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace IdSrv.Migrations.MR
             MigrationsDirectory = @"Migrations\MR";
         }
 
-        protected override void Seed(IdSrv.MRCfg.CustomDatabase context)
+        protected override void Seed(IdSrv.MembershipRebootCustomisation.CustomDatabase context)
         {
             //  This method will be called after migrating to the latest version.
 

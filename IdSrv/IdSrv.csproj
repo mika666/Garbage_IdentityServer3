@@ -132,9 +132,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-    <Content Include="IdSrvCfg\idsrv3test.pfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Certs\idsrv3test.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -245,10 +244,6 @@
       <DependentUpon>201603311623248_v2_5_0.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ScopeConfiguration\Configuration.cs" />
-    <Compile Include="MRCfg\CustomConfig.cs" />
-    <Compile Include="MRCfg\CustomDatabase.cs" />
-    <Compile Include="MRCfg\CustomGroup.cs" />
-    <Compile Include="MRCfg\CustomUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -313,6 +308,12 @@
     <EmbeddedResource Include="Migrations\ScopeConfiguration\201603311623248_v2_5_0.resx">
       <DependentUpon>201603311623248_v2_5_0.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MembershipReboot\MembershipReboot.csproj">
+      <Project>{802c15c6-0b85-46a9-9416-6013f471a20d}</Project>
+      <Name>MembershipReboot</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

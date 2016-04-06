@@ -14,10 +14,15 @@ namespace IdSrv.IdSrvCfg
             {
                 new Client
                 {
+                    //implicit
+
                     Enabled = true,
                     ClientName = "JS Client",
                     ClientId = "js",
                     Flow = Flows.Implicit,
+
+                    //RequireConsent = false
+                    //RequireSignOutPrompt = false
 
                     //Note:
                     //redirect uris and allowed origins MUST be same as the client is operating on

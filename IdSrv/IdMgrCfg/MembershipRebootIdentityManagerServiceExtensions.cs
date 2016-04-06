@@ -27,7 +27,7 @@ using IdentityManager;
 using IdentityManager.Configuration;
 using IdentityManager.MembershipReboot;
 using IdSrv.IdMgrCfg;
-using IdSrv.MRCfg;
+using IdSrv.MembershipRebootCustomisation;
 
 namespace IdSrv.IdMgrCfg
 {

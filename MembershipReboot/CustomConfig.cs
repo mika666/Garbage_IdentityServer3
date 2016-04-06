@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace IdSrv.MRCfg
+namespace IdSrv.MembershipRebootCustomisation
 {
     public class CustomConfig : MembershipRebootConfiguration<CustomUser>
     {
@@ -31,10 +31,16 @@ namespace IdSrv.MRCfg
             //maybe can do some db house keeping here too???
             //System.Data.Entity.Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<DefaultMembershipRebootDatabase, BrockAllen.MembershipReboot.Ef.Migrations.Configuration>());
 
+            //Note:
+            //if MembershipRebootConfoguration settings are needed, use the SecuritySettings enum and pass it to the MembershipRebootConfiguration<CustomUser> constructor.
+            //so maybe not through the custom class, but rater a method returning MembershipRebootConfiguration<CustomUser>
+
             Config = new CustomConfig();
             Config.PasswordHashingIterationCount = 10000;
             Config.RequireAccountVerification = false;
             //config.EmailIsUsername = true;
+
+
 
             //Note
             //some extra opts maybe...

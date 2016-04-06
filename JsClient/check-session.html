@@ -32,7 +32,7 @@
             console.error('No client_id passed to RP session frame');
         }
         else {
-            var idSrvOrigin = 'https://localhost:44300'; //TODO - make it not hardcoded but web.config based!
+            var idSrvOrigin = 'https://localhost:44300/core'; //TODO - make it not hardcoded but web.config based!
 
             var frame = document.getElementById('op');
             frame.onload = function () {

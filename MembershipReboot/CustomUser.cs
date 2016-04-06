@@ -21,10 +21,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using IdentityManager;
-using IdentityManager.MembershipReboot;
 
-namespace IdSrv.MRCfg
+namespace IdSrv.MembershipRebootCustomisation
 {
 
     /// <summary>
@@ -46,6 +44,11 @@ namespace IdSrv.MRCfg
         //public virtual int? someNullableIdProp { get; set; }
     }
 
+
+    //Note: there is also option to customise this without the group.
+    //so it may well be a better option here.
+
+    
     public class CustomUserAccountService : UserAccountService<CustomUser>
     {
         public CustomUserAccountService(CustomConfig config, CustomUserRepository repo)

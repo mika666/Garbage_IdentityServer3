@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using IdentityManager.MembershipReboot;
-using IdSrv.MRCfg;
+using IdSrv.MembershipRebootCustomisation;
 
 namespace IdSrv.IdMgrCfg
 {

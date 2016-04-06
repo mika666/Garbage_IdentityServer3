@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.IdentityModel.Selectors;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
@@ -24,6 +25,40 @@ namespace IdSrv.IdSrvCfg
     {
         public static X509Certificate2 Get()
         {
+
+            //var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            //store.Open(OpenFlags.ReadOnly);
+
+            //var cert = store.Certificates.Find(X509FindType.FindBySubjectName, "xx", false)[0]; //false for searching also for invalid certs; usually would go for true
+
+            ////validating certs
+            //var chain = new X509Chain();
+            //var policy = new X509ChainPolicy()
+            //{
+            //    RevocationFlag = X509RevocationFlag.EntireChain,
+            //    VerificationTime = DateTime.Today,
+            //    RevocationMode = X509RevocationMode.Online
+            //};
+
+            //chain.ChainPolicy = policy;
+
+            ////validating certs!
+            //if (!chain.Build(cert))
+            //{
+            //    foreach (var element in chain.ChainElements)
+            //    {
+            //        foreach (var status in element.ChainElementStatus)
+            //        {
+            //            Console.WriteLine(status.StatusInformation);
+            //        }
+            //    }
+            //}
+
+            //var validator = X509CertificateValidator.ChainTrust;
+            //validator.Validate(cert); //this will throw if not valid of course
+
+            //store.Close();
+
             return new X509Certificate2(
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\Certs\idsrv3test.pfx"), "idsrv3test");
 

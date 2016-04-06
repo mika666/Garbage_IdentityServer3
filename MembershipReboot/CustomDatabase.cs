@@ -19,36 +19,30 @@ using BrockAllen.MembershipReboot.Relational;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using IdentityManager;
-using IdentityManager.MembershipReboot;
 
-namespace IdSrv.MRCfg
+namespace IdSrv.MembershipRebootCustomisation
 {
-    /// <summary>
-    /// What is this for????
-    /// </summary>
-    public class CustomGroup : RelationalGroup
+    public class CustomDatabase : MembershipRebootDbContext<CustomUser, CustomGroup>
     {
-        public virtual string Description { get; set; }
-    }
+        //Note: paramless constructor needed when adding migrations
+        public CustomDatabase() { }
 
-    public class CustomGroupService : GroupService<CustomGroup>
-    {
-        public CustomGroupService(CustomGroupRepository repo, CustomConfig config)
-            : base(config.DefaultTenant, repo)
-        {
-
-        }
-    }
-
-    public class CustomGroupRepository : DbContextGroupRepository<CustomDatabase, CustomGroup>
-    {
-        public CustomGroupRepository(CustomDatabase ctx)
-            : base(ctx)
+        public CustomDatabase(string name)
+            : base(name)
         {
         }
-    }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //Hello there ;)
+            //need to override the schema for the object here as it defaults to dbo of course
+            //could also override the properties mapping to lower case, but ignore it for the time being
+            //TODO
+
+            base.OnModelCreating(modelBuilder);
+        }
+    }
 }
