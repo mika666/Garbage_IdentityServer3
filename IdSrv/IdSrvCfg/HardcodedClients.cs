@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using IdentityManager;
 using IdentityServer3.Core.Models;
+using Constants = IdentityServer3.Core.Constants;
 
 namespace IdSrv.IdSrvCfg
 {
@@ -58,6 +60,28 @@ namespace IdSrv.IdSrvCfg
                     //}
 
                     AccessTokenLifetime = 70
+                },
+
+                //auth client that will authenticate user and obtain token in his name; used to provide an authentication proxy
+                //so the js client app does not have to redirect in order to authenticate user;
+                //this is a trade of - SSO (single Sign on) will not work this way.
+                new Client
+                {
+                    ClientName = "Auth client",
+                    ClientId = "auth_client",
+                    Enabled = true,
+                    AccessTokenType = AccessTokenType.Jwt,
+
+                    Flow = Flows.ResourceOwner,
+
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("auth_secret".Sha256())
+                    },
+
+                    AllowAccessToAllScopes = true
+                    ////Constants.StandardScopes.OpenId
+
                 }
             };
         }

@@ -32,10 +32,14 @@ namespace IdSrv.IdSrvCfg
 
                     ScopeSecrets = new List<Secret>
                     {
-                        new Secret("api-secret".Sha256()) //thanks to that can call the api from backend
+                        new Secret("api-secret".Sha256()) //so can use the token validation on the service level - thanks to that can call the api from backend
                     },
 
                     Type = ScopeType.Resource
+
+                    //can use this to include needed user claims with the resource token
+                    //,Claims = new List<ScopeClaim>()
+                    //, IncludeAllClaimsForUser = true
                 }
             };
         }

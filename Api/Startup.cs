@@ -28,7 +28,7 @@ namespace Api
 
                 // For access to the introspection endpoint
                 ClientId = "api", //this is a name of an authorised scope - see scopes configuration in the identity server
-                ClientSecret = "api-secret",
+                ClientSecret = "api-secret", //secret defined in the api scope; this way the service can pull the required info to verify the incoming tokens
 
                 RequiredScopes = new[] { "api" }
             });

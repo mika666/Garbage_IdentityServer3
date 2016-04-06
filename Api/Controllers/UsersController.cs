@@ -55,9 +55,9 @@ namespace Api.Controllers
                 //create a model off the incoming data
                 var user = _userService.CreateAccount(model.UserName, model.Pass, model.Email);
 
-                using (var db = new CustomDatabase(""))
+                using (var db = new CustomDatabase("MembershipRebootIdentityDb"))
                 {
-                    db.
+                    
                 }
 
                 return Ok(user);
