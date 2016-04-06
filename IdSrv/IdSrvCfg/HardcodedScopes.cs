@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using IdentityServer3.Core;
 using IdentityServer3.Core.Models;
 
 namespace IdSrv.IdSrvCfg
@@ -32,7 +33,7 @@ namespace IdSrv.IdSrvCfg
 
                     ScopeSecrets = new List<Secret>
                     {
-                        new Secret("api-secret".Sha256()) //so can use the token validation on the service level - thanks to that can call the api from backend
+                        new Secret("api-secret".Sha256()) //so can use the token validation on the service level - app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
                     },
 
                     Type = ScopeType.Resource
@@ -40,6 +41,27 @@ namespace IdSrv.IdSrvCfg
                     //can use this to include needed user claims with the resource token
                     //,Claims = new List<ScopeClaim>()
                     //, IncludeAllClaimsForUser = true
+                },
+
+
+                //scope used when connecting through the auth client 
+                new Scope
+                {
+                    Name="auth-scope",
+                    Type=ScopeType.Resource,
+                    Claims = new List<ScopeClaim>
+                    {
+                        new ScopeClaim(Constants.ClaimTypes.Name),
+                        new ScopeClaim(Constants.ClaimTypes.Email),
+                        new ScopeClaim(Constants.ClaimTypes.FamilyName),
+                        new ScopeClaim(Constants.ClaimTypes.GivenName),
+                        new ScopeClaim(Constants.ClaimTypes.Gender),
+                        new ScopeClaim(Constants.ClaimTypes.Id),
+                        new ScopeClaim(Constants.ClaimTypes.PhoneNumber),
+                        new ScopeClaim(Constants.ClaimTypes.Subject),
+                        new ScopeClaim(Constants.ClaimTypes.AccessTokenHash),
+                        new ScopeClaim(Constants.ClaimTypes.Role)
+                    }
                 }
             };
         }
