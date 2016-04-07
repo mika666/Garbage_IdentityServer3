@@ -78,7 +78,6 @@
 <script src="bower_components/oidc-token-manager/dist/oidc-token-manager.js"></script>
 
 <script>
-    
 
 
     $(document).ready(function() {
@@ -120,9 +119,15 @@
 
         var manager = new OidcTokenManager(settings);
 
-        manager.addOnTokenObtained(function () {
+        manager.addOnTokenObtained(function() {
             display('.js-access-token', { access_token: manager.access_token, expires_in: manager.expires_in });
         });
+
+
+        //getting the user profile:
+        //manager.oidcClient.loadUserProfile(access_token).then(function(userInfoValues){
+            //console.warn(userInfoValues)
+        //});
 
 
         function checkSessionState() {

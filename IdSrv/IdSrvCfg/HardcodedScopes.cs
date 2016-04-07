@@ -18,9 +18,14 @@ namespace IdSrv.IdSrvCfg
             return new List<Scope>
             {
                 StandardScopes.OpenId,
-                StandardScopes.Profile,
+                //StandardScopes.Profile,
 
                 StandardScopes.Email,
+                //Note, when requesting access token, the abowe get discarderd,
+                //can use istead
+                StandardScopes.ProfileAlwaysInclude,
+
+
 
                 //when requested, return an access token that can be used
                 //to verify user athentication when calling the api
