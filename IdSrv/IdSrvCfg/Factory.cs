@@ -63,7 +63,10 @@ namespace IdSrv.IdSrvCfg
             //var clientStore = new InMemoryClientStore(HardcodedClients.Get());
             //factory.ClientStore = new Registration<IClientStore>(resolver => clientStore);
 
+            //this will register cofiguration services - so scopes and clients
             factory.RegisterConfigurationServices(efConfig);
+
+            //and this will register operational services - tokens and such
             factory.RegisterOperationalServices(efConfig);
 
             return factory;
